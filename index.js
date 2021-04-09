@@ -72,12 +72,17 @@ hint: the strings returned need to exactly match the string in step 4.
  */
 
 function getWinnersByYear(array, getYearsCB, getWinnersCB) {
-  const winString = array.map((callback1, index) => {
-    console.log(
-      `In ${getYears[index]}, ${getWinners[index]} won the world cup!`
-    );
+  const getWinners = getWinnersCB(array, getFinals);
+  const getYears = getYearsCB(array, getFinals);
+  const winString = getYears.map((item, index) => {
+    return `In ${item}, ${getWinners[index]} won the world cup!`;
   });
+  return winString;
 }
+// const getWinnersByYear = getFinals.map((callback1, index) => {
+//   return `In ${getYears[index]}, ${getWinners[index]} won the world cup!`;
+// });
+// console.log(getWinnersByYear);
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 6: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
 Use the higher order function getAverageGoals to do the following: 
  1. Receive the callback function getFinals from task 2 ensure you pass in the data as an argument
@@ -88,8 +93,15 @@ Use the higher order function getAverageGoals to do the following:
  Example of invocation: getAverageGoals(getFinals(fifaData));
 */
 
-function getAverageGoals(/* code here */) {
-  /* code here */
+function getAverageGoals(getFinals) {
+  const getAverageGoals = getFinals.reduce((total, data) => {
+    let sum = total + data["Home Team Goals"] + data["Away Team Goals"];
+    return sum;
+  }, 0);
+  const totalAverage = getAverageGoals / getFinals.length;
+  console.log(totalAverage);
+
+  return totalAverage.toFixed(2);
 }
 
 /// 🥅 STRETCH 🥅 ///
